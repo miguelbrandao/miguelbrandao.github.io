@@ -318,12 +318,11 @@ a:hover { text-decoration: underline; }
 .site-footer-credits { color: #819198; }
 
 .in-development { color: #000000; text-align: left; background-color: #ffd700; background-image: linear-gradient(120deg, #ffd700, #ffbb00); }
-
 @media screen and (min-width: 64em) { .in-development { padding: 5rem 6rem; } }
 @media screen and (min-width: 42em) and (max-width: 64em) { .in-development { padding: 3rem 4rem; } }
 @media screen and (max-width: 42em) { .in-development { padding: 2rem 1rem; } }
-.warning-text { margin-top: 0; margin-bottom: 0.1rem; }
 
+.warning-text { margin-top: 0; margin-bottom: 0.1rem; }
 @media screen and (min-width: 64em) { .warning-text { font-size: 3.25rem; } }
 @media screen and (min-width: 42em) and (max-width: 64em) { .warning-text { font-size: 2.25rem; } }
 @media screen and (max-width: 42em) { .warning-text { font-size: 1.75rem; } }
