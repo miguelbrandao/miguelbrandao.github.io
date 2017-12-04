@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <section class="page-header">
@@ -37,42 +37,48 @@
       <h1>Who am I?</h1>
       I'm a Computer Engineering student @ <a href="https://www.uminho.pt/EN"> Universidade do Minho</a>
       <h1>Projects</h1>
-      <script type="text/javascript">
-        // HTTP request
-      	var xhr = new XMLHttpRequest();
-      	xhr.open("GET", "https://api.github.com/users/mickaelbrandao/repos", false);
-      	xhr.send();
-		console.log(xhr.status);
-		console.log(xhr.statusText);
-		// Printing Data to console (debug)
-		var json = JSON.parse(xhr.responseText);
-		console.log(json);
-		console.log(json[0].name);
-		// Adding data
-		var i; var proj; var text; var href; var projName; var n; var s;
-		for (i=0; i<json.length; i++){
-			// Create a paragraph node
-			proj = document.createElement("P");
-			// Defines project name to be displayed, deletes everything after '_' and replaces '-' with a space
-			s = json[i].name;
-			n = s.indexOf('_');
-			projName = s.substring(0, n != -1 ? n : s.length).replace(/-/g," ");
-			// Create a text node with the project name
-			text = document.createTextNode(projName);
-			// Create href node
-			a = document.createElement('a');
-			// Define href link
-			a.href = json[i].html_url;
-			// Insert text to href
-			a.appendChild(text);
-			// Insert href in p
-			proj.appendChild(a);
-			// Insert p in 'main'
-			document.getElementById("main").appendChild(proj);
-		}
-      </script>
+       <div class="row" id="proj_list">
+          <script type="text/javascript">
+              // HTTP request
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", "https://api.github.com/users/mickaelbrandao/repos", false);
+              xhr.send();
+              //console.log(xhr.status);
+              //console.log(xhr.statusText);
+              // Printing Data to console (debug)
+              var json = JSON.parse(xhr.responseText);
+              //console.log(json);
+              //console.log(json[0].name);
+              // Adding data
+              var i; var div; var square; var text; var href; var projName; var n; var s;
+              for (i=0; i<json.length; i++){
+                  // Create a paragraph node
+                  div = document.createElement("div");
+                  div.setAttribute("class","col-1");
+                  // Defines project name to be displayed, deletes everything after '_' and replaces '-' with a space
+                  s = json[i].name;
+                  n = s.indexOf('_');
+                  projName = s.substring(0, n != -1 ? n : s.length).replace(/-/g," ");
+                  // Create a text node with the project name
+                  text = document.createTextNode(projName);
+                  // Create href node
+                  a = document.createElement('a');
+                  // Define href link
+                  a.href = json[i].html_url;
+                  square= document.createElement("square");
+                  square.setAttribute("class","project");
+                  square.appendChild(text);
+                  // Insert text to href
+                  a.appendChild(square);
 
+                  // Insert href in p
+                  div.appendChild(a);
 
+                  // Insert p in 'main'
+                  document.getElementById("proj_list").appendChild(div);
+              }
+          </script>
+       </div> 
     </section>
 
     <section class="in-development">
