@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
 <!-- Begin Jekyll SEO tag v2.3.0 -->
-<title>mickaelbrandao.github.io | Miguel Brandão</title>
+<title>Miguel Brandão</title>
 <meta property="og:title" content="mickaelbrandao.github.io" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Trying out new stuff!" />
@@ -12,7 +12,7 @@
 <link rel="canonical" href="http://localhost:4000/" />
 <meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="Miguel Brandão" />
-<script type="application/ld+json">
+<script type="application/ld+reposJSON">
 {"name":"Miguel Brandão","description":"Trying out new stuff!","author":null,"@type":"WebSite","url":"http://localhost:4000/","publisher":null,"image":null,"headline":"mickaelbrandao.github.io","dateModified":null,"datePublished":null,"sameAs":null,"mainEntityOfPage":null,"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
@@ -28,7 +28,7 @@
       <h1 class="project-name">Miguel Brandão</h1>
       <h2 class="project-tagline">Trying out new stuff!</h2>
       
-        <a href="http://github.com/mickaelbrandao" class="btn">View on GitHub</a>
+      <a href="http://github.com/mickaelbrandao" class="btn">View on GitHub</a>
       
       
     </section>
@@ -42,42 +42,54 @@
        <div class="row" id="proj_list">
           <script type="text/javascript">
               // HTTP request
-              var xhr = new XMLHttpRequest();
-              xhr.open("GET", "https://api.github.com/users/mickaelbrandao/repos", false);
-              xhr.send();
-              //console.log(xhr.status);
-              //console.log(xhr.statusText);
+              var limit = new XMLHttpRequest();
+              limit.open("GET","https://api.github.com/rate_limit",false);
+              limit.send();
+              var limitJ = JSON.parse(limit.response);
+              console.log(limitJ);
+              
+              var repos = new XMLHttpRequest();
+              var content = new XMLHttpRequest();
+              repos.open("GET", "https://api.github.com/users/mickaelbrandao/repos", false);
+              repos.send();
+              //console.log(repos.status);
+              //console.log(repos.statusText);
               // Printing Data to console (debug)
-              var json = JSON.parse(xhr.responseText);
-              //console.log(json);
-              //console.log(json[0].name);
+              var reposJSON = JSON.parse(repos.responseText);
+              console.log(reposJSON);
+              //console.log(reposJSON[0].name);
               // Adding data
-              var i; var div; var square; var text; var href; var projName; var n; var s;
-              for (i=0; i<json.length; i++){
-                  // Create a paragraph node
-                  div = document.createElement("div");
-                  div.setAttribute("class","col-1");
-                  // Defines project name to be displayed, deletes everything after '_' and replaces '-' with a space
-                  s = json[i].name;
-                  n = s.indexOf('_');
-                  projName = s.substring(0, n != -1 ? n : s.length).replace(/-/g," ");
-                  // Create a text node with the project name
-                  text = document.createTextNode(projName);
-                  // Create href node
-                  a = document.createElement('a');
-                  // Define href link
-                  a.href = json[i].html_url;
-                  square= document.createElement("square");
-                  square.setAttribute("class","project");
-                  square.appendChild(text);
-                  // Insert text to href
-                  a.appendChild(square);
+              var i; var div; var square; var text; var href; var projName; var n; var s; var contentJSON; var img;
+              for (i=0; i<reposJSON.length; i++){
+                div = document.createElement("div");
+                div.setAttribute("class","col-1");
+                s = reposJSON[i].name;
 
-                  // Insert href in p
-                  div.appendChild(a);
+                content.open("GET","https://api.github.com/repos/mickaelbrandao/"+s+"/contents/thumbnail.png",false);
+                content.send();
+                var contentJSON = JSON.parse(content.responseText);
+                console.log(contentJSON);
+                img = contentJSON.download_url;
 
-                  // Insert p in 'main'
-                  document.getElementById("proj_list").appendChild(div);
+                n = s.indexOf('_');
+                projName = s.substring(0, n != -1 ? n : s.length).replace(/-/g," ");
+                text = document.createTextNode(projName);
+
+                a = document.createElement('a');
+                a.href = reposJSON[i].html_url;
+                /*
+                square= document.createElement("square");
+                square.setAttribute("class","project");
+                square.setAttribute("style","background-image:"+img+";");
+                square.appendChild(text);
+                */
+
+                a.setAttribute("class","project");
+                a.style.backgroundImage="url("+img+")";
+
+                a.appendChild(text);
+                div.appendChild(a);
+                document.getElementById("proj_list").appendChild(div);
               }
           </script>
        </div> 
