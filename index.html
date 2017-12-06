@@ -83,12 +83,23 @@
                 square.setAttribute("style","background-image:"+img+";");
                 square.appendChild(text);
                 */
+                var div1 = document.createElement("div");
+                div1.setAttribute("class","project");
+                var himg = document.createElement("img");
+                himg.src = img;
+                himg.setAttribute("class","image");
+                var div2 = document.createElement("div");
+                div2.setAttribute("class","middle");
+                var div3 = document.createElement("div");
+                div3.setAttribute("class","text");
+                div3.appendChild(text);
+                div2.appendChild(div3);
+                div1.appendChild(div2);
+                div1.appendChild(himg);
+                a.appendChild(div2);
+                div1.appendChild(a);
+                div.appendChild(div1);
 
-                a.setAttribute("class","project");
-                a.style.backgroundImage="url("+img+")";
-
-                a.appendChild(text);
-                div.appendChild(a);
                 document.getElementById("proj_list").appendChild(div);
               }
           </script>
