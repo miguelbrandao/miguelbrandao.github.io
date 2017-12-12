@@ -37,15 +37,18 @@
      <!-- <h1 id="mickaelbrandaogithubio">mickaelbrandao.github.io</h1>
  -->
       <h1>Who am I?</h1>
-      I'm a Computer Engineering student @ <a href="https://www.uminho.pt/EN"> Universidade do Minho</a>
+      I'm a Computer Engineering student @ <a href="https://www.uminho.pt/EN">University of Minho</a>
       <h1>Projects
 
       <div class="dropdown">
 		  <div class="dropbtn"></div>
 		  <div class="dropdown-content">
-		    <a href="#">Ordenar A-Z</a>
-		    <a href="#">Ordenar por estrelas</a>
-		    <a href="#">Ordenar por *placeholder*</a>
+		  	<p>Sort by:</p>
+		    <a href="?">A-Z</a>
+		    <a href="?sort=reverse">Z-A</a>
+		    <a href="?sort=stargazers_count">Stars</a>
+		    <a href="?sort=forks_count">Forks</a>
+		    <a href="?sort=watchers_count">Watchers</a>
 		  </div>
 		</div>
 
@@ -55,7 +58,7 @@
 		
        <div class="row" id="proj_list">
           <script type="text/javascript">
-              // HTTP request
+              // request api limit
               var limit = new XMLHttpRequest();
               limit.open("GET","https://api.github.com/rate_limit",false);
               limit.send();
@@ -75,8 +78,74 @@
               var reposJSON = JSON.parse(repos.responseText);
               console.log(reposJSON);
               //console.log(reposJSON[0].name);
+
+              function sortBy (array, order){
+              		var i, index, j;
+              		if (order == "stargazers_count"){
+          				for (i=1; i < array.length; i++){
+						      index = array[i];
+						      j = i;
+						      while (j > 0 && array[j-1].stargazers_count < index.stargazers_count)
+						      {
+						           array[j] = array[j-1];
+						           j--;
+						      }
+						      array[j] = index;
+						}
+              		}
+              		else if (order == "forks_count"){
+              			for (i=1; i < array.length; i++){
+						      index = array[i];
+						      j = i;
+						      while (j > 0 && array[j-1].forks_count < index.forks_count)
+						      {
+						           array[j] = array[j-1];
+						           j--;
+						      }
+						      array[j] = index;
+						}
+              		}
+              		else if (order == "watchers_count"){
+              			for (i=1; i < array.length; i++){
+						      index = array[i];
+						      j = i;
+						      while (j > 0 && array[j-1].watchers_count < index.watchers_count)
+						      {
+						           array[j] = array[j-1];
+						           j--;
+						      }
+						      array[j] = index;
+						}
+              		}
+              		console.log(array);
+              		return array;
+              }
+
+
+
+              var url;
+              var query;
+              var i;
+
+              url = window.location.href;
+              if (url.indexOf("?") != -1){
+	              query = url.substring(url.indexOf("?") + 1); 
+	              console.log(query);
+	              
+	              if (query.length != 0){
+	              	if (query == "sort=reverse")
+	              		reposJSON.reverse();
+	              	if (query == "sort=stargazers_count")
+	              		reposJSON = sortBy(reposJSON, "stargazers_count");
+	              	if (query == "sort=forks_count")
+	              		reposJSON = sortBy(reposJSON, "forks_count");
+	              	if (query == "sort=watchers_count")
+	              		reposJSON = sortBy(reposJSON, "watchers_count");
+	              }
+          	  }
+
               // Adding data
-              var i; var div; var square; var text; var href; var projName; var n; var s; var contentJSON; var img;
+              var div; var square; var text; var href; var projName; var n; var s; var contentJSON; var img;
               for (i=0; i<reposJSON.length; i++){
                 div = document.createElement("div");
                 div.setAttribute("class","col-1");
@@ -86,7 +155,10 @@
                 content.send();
                 var contentJSON = JSON.parse(content.responseText);
                 console.log(contentJSON);
-                img = contentJSON.download_url;
+                //console.log(contentJSON.message);
+                if (contentJSON.message == "Not Found")
+                	img = "images/thumbnail.png";
+                else img = contentJSON.download_url;
 
                 n = s.indexOf('_');
                 projName = s.substring(0, n != -1 ? n : s.length).replace(/-/g," ");
@@ -114,6 +186,7 @@
 
                 document.getElementById("proj_list").appendChild(div);
               }
+
           </script>
        </div> 
     </section>

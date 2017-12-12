@@ -455,6 +455,12 @@ a:hover { text-decoration: underline; }
     z-index: 1;
 }
 
+.dropdown-content p {
+	padding: 0.1rem 0.3rem;
+	margin: 0;
+}
+
+
 /* Links inside the dropdown */
 .dropdown-content a {
     color: black;
