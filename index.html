@@ -44,11 +44,11 @@
 		  <div class="dropbtn"></div>
 		  <div class="dropdown-content">
 		  	<p>Sort by:</p>
-		    <a href="?">A-Z</a>
-		    <a href="?sort=reverse">Z-A</a>
-		    <a href="?sort=stargazers_count">Stars</a>
-		    <a href="?sort=forks_count">Forks</a>
-		    <a href="?sort=watchers_count">Watchers</a>
+		    <a id="AZ" href="?">A-Z</a>
+		    <a id="ZA" href="?sort=reverse">Z-A</a>
+		    <a id="stars" href="?sort=stargazers_count">Stars</a>
+		    <a id="forks" href="?sort=forks_count">Forks</a>
+		    <a id="watchers" href="?sort=watchers_count">Watchers</a>
 		  </div>
 		</div>
 
@@ -63,7 +63,7 @@
               limit.open("GET","https://api.github.com/rate_limit",false);
               limit.send();
               var limitJ = JSON.parse(limit.response);
-              console.log(limitJ);
+              //console.log(limitJ);
               
               var repos = new XMLHttpRequest();
               var content = new XMLHttpRequest();
@@ -74,9 +74,8 @@
               }
               console.log(repos.status);
               //console.log(repos.statusText);
-              // Printing Data to console (debug)
               var reposJSON = JSON.parse(repos.responseText);
-              console.log(reposJSON);
+              //console.log(reposJSON);
               //console.log(reposJSON[0].name);
 
               function sortBy (array, order){
@@ -92,6 +91,7 @@
 						      }
 						      array[j] = index;
 						}
+						document.getElementById("stars").setAttribute("class","active");
               		}
               		else if (order == "forks_count"){
               			for (i=1; i < array.length; i++){
@@ -104,6 +104,8 @@
 						      }
 						      array[j] = index;
 						}
+						document.getElementById("forks").setAttribute("class","active");
+
               		}
               		else if (order == "watchers_count"){
               			for (i=1; i < array.length; i++){
@@ -116,11 +118,11 @@
 						      }
 						      array[j] = index;
 						}
+						document.getElementById("watchers").setAttribute("class","active");
               		}
-              		console.log(array);
+              		//console.log(array);
               		return array;
               }
-
 
 
               var url;
@@ -130,11 +132,13 @@
               url = window.location.href;
               if (url.indexOf("?") != -1){
 	              query = url.substring(url.indexOf("?") + 1); 
-	              console.log(query);
+	              //console.log(query);
 	              
 	              if (query.length != 0){
-	              	if (query == "sort=reverse")
+	              	if (query == "sort=reverse"){
 	              		reposJSON.reverse();
+						document.getElementById("ZA").setAttribute("class","active");
+	              	}
 	              	if (query == "sort=stargazers_count")
 	              		reposJSON = sortBy(reposJSON, "stargazers_count");
 	              	if (query == "sort=forks_count")
@@ -142,6 +146,7 @@
 	              	if (query == "sort=watchers_count")
 	              		reposJSON = sortBy(reposJSON, "watchers_count");
 	              }
+					else document.getElementById("AZ").setAttribute("class","active");
           	  }
 
               // Adding data
@@ -154,7 +159,7 @@
                 content.open("GET","https://api.github.com/repos/mickaelbrandao/"+s+"/contents/thumbnail.png",false);
                 content.send();
                 var contentJSON = JSON.parse(content.responseText);
-                console.log(contentJSON);
+                //console.log(contentJSON);
                 //console.log(contentJSON.message);
                 if (contentJSON.message == "Not Found")
                 	img = "images/thumbnail.png";
@@ -173,13 +178,54 @@
                 himg.src = img;
                 himg.setAttribute("class","image");
                 var div2 = document.createElement("div");
-                div2.setAttribute("class","middle");
+                div2.setAttribute("class","project-info-container");
                 var div3 = document.createElement("div");
+                var div3_5 = document.createElement("div");
+                var div4 = document.createElement("div");
+                var div5 = document.createElement("div");
+                var div6 = document.createElement("div");
+                var div7 = document.createElement("div");
+                var div8 = document.createElement("div");
+
+                var star_img = document.createElement("img");
+                var forks_img = document.createElement("img");
+                var watchers_img = document.createElement("img");
+                star_img.src = "images/stars.png";
+                forks_img.src = "images/forks.png";
+                watchers_img.src = "images/watchers.png";
+                // star_img.setAttribute("class","repos-info");
+                // forks_img.setAttribute("class","repos-info");
+                // watchers_img.setAttribute("class","repos-info");
+
+                div3_5.setAttribute("class","repos-info");
+                div4.setAttribute("class","row-info");
+                div5.setAttribute("class","col_info");
+                div6.setAttribute("class","col_info");
+                div7.setAttribute("class","col_info");
+                div3_5.appendChild(div4);
+                div4.appendChild(div5);
+                div4.appendChild(div6);
+                div4.appendChild(div7);
+                div4.appendChild(div8);
+
+                div8.setAttribute("class","col_info-desc");
+                div8.appendChild(document.createTextNode(reposJSON[i].description));
+
+                
+                div5.appendChild(star_img);
+                div5.appendChild(document.createTextNode(reposJSON[i].stargazers_count));
+                div6.appendChild(forks_img);
+                div6.appendChild(document.createTextNode(reposJSON[i].forks_count));
+                div7.appendChild(watchers_img);
+                div7.appendChild(document.createTextNode(reposJSON[i].watchers_count));
+
                 div3.setAttribute("class","text");
                 div3.appendChild(text);
+                div3.appendChild(div3_5);
                 div2.appendChild(div3);
                 div1.appendChild(div2);
-                div1.appendChild(himg);
+                a.appendChild(himg);
+                //div1.appendChild(himg);
                 a.appendChild(div2);
                 div1.appendChild(a);
                 div.appendChild(div1);

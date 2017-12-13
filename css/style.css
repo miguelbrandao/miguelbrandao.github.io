@@ -335,14 +335,14 @@ a:hover { text-decoration: underline; }
 	}
 }
 /*for tablets*/
-@media screen and (min-width: 42em) and (max-width: 64em){
+@media screen and (min-width: 42em) and (max-width: 80em){
 	[class*="col-"] {
 		width: 50%;
 	}
 }
 
 /*for desktop*/
-@media screen and (min-width: 64em){
+@media screen and (min-width: 80em){
 	.col-1 {
 		width: 33.33%;
 	}
@@ -359,73 +359,9 @@ a:hover { text-decoration: underline; }
     clear: both;
     display: table;
 }
-/*
-.project {
-	width: 100%;
-	float: left;
-	padding: 1rem;
-	padding-top: 56.25%;
-	background-color: transparent;
-	text-align: center;
-	color: white;
-	border-style: solid; border-width: 1px;
-	border-radius: 0.3rem;
-	border-color: #159957;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-*/
-.project {
-	float: left;
-    position: relative;
-    border-style: solid; border-width: 1px;
-	border-radius: 0.3rem;
-	border-color: #159957;
-}
 
 
-
-.image {
-  opacity: 1;
-  display: block;
-  width: auto;
-  height: auto;
-  transition: .5s ease;
-  backface-visibility: hidden;
-}
-
-.middle {
-  max-width: 90%;
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%)
-}
-
-.project:hover .image {
-  opacity: 0.3;
-}
-
-.project:hover .middle{
-  opacity: 1;
-}
-
-.text {
-  text-align: center;
-  background-color: #159957;
-  border-color: #159957;
-  border-style: solid; border-width: 1px;
-  border-radius: 0.3rem;
-  color: white;
-  padding: 1rem;
-}
-
-
- /* Dropdown Button */
+/* Dropdown Button */
 .dropbtn {
     cursor: pointer;
     background-color: transparent;
@@ -472,6 +408,9 @@ a:hover { text-decoration: underline; }
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
 
+.dropdown-content a.active {color: #159957}
+
+
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
@@ -481,3 +420,127 @@ a:hover { text-decoration: underline; }
 .dropdown:hover .dropbtn {
   	border-top: 0.4em solid #f1f1f1;
 } 
+
+
+/*
+.project {
+	width: 100%;
+	float: left;
+	padding: 1rem;
+	padding-top: 56.25%;
+	background-color: transparent;
+	text-align: center;
+	color: white;
+	border-style: solid; border-width: 1px;
+	border-radius: 0.3rem;
+	border-color: #159957;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+*/
+.project {
+	float: left;
+    position: relative;
+    border-style: solid;
+    border-width: 1px;
+	border-radius: 0.3rem;
+	border-color: #159957;
+
+}
+
+
+
+.image {
+  opacity: 1;
+  display: block;
+  width: auto;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+
+
+
+
+.project-info-container {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 3.4rem;
+	-moz-transition: height .5s ease; /*firefox*/
+	-webkit-transition: height .5s ease; /*chrome*/
+	-o-transition: height .5s ease; /*opera*/
+	transition: height .5s ease; 
+	width: 100%;
+	/*text-align: center;*/
+ 	background: rgba(96, 108, 113, 0.8);
+  	/*color: white;*/
+  	/*padding: 0.5rem;*/
+
+}
+
+.project:hover .project-info-container {
+	height: 100%;
+}
+
+.text {
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-align: center;
+	color: white;
+	padding-top: 0.8rem;
+}
+
+
+.col_info {
+	width: 33.33%;
+    float: left;
+    padding: 15px;
+    padding-bottom: 5px;
+    /*border: 1px solid red;*/
+}
+
+.col_info-desc {
+	font-weight: normal;
+	width: 100%;
+    float: left;
+    padding: 0 0.7rem;
+    text-overflow: ellipsis;
+    text-align: center;
+    /*border: 1px solid red;*/
+}
+
+.row-info::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.repos-info{
+	font-weight: normal;
+	position: absolute;
+	bottom: 0;
+	top: 3rem;
+	max-height: 0;
+	-moz-transition: max-height .5s ease;
+	-webkit-transition: max-height .5s ease;
+	-o-transition: max-height .5s ease;
+	transition: max-height .5s ease;
+	overflow: hidden;
+	width: 100%;
+}
+
+.project:hover .repos-info{
+	max-height: 100%;
+}
+ 
+
+
+.col_info img{
+	max-width: 30px;
+	max-height: 30px;
+	margin-right: 10px;
+	vertical-align: middle;
+}
